@@ -2,71 +2,95 @@
 # System Properties for G2
 #
 
+# Audio
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=480 \
-    ro.opengles.version=196608 \
-    ro.loki_enabled=1
-
-# Audio Configuration
-PRODUCT_PROPERTY_OVERRIDES += \
-    mm.enable.smoothstreaming=true \
-    mm.enable.qcom_parser=3310129 \
-    ro.qc.sdk.audio.fluencetype=fluence \
-    persist.audio.fluence.voicecall=true \
-    persist.audio.fluence.audiorec=true \
     persist.audio.dualmic.config=endfire \
-    audio.offload.buffer.size.kb=32 \
-    av.offload.enable=true \
-    av.streaming.offload.enable=true \
-    use.voice.path.for.pcm.voip=true \
-    audio.offload.multiple.enabled=false \
-    audio.offload.gapless.enabled=true \
-    tunnel.audio.encode=true \
-    media.aac_51_output_enabled=true \
-    audio.offload.pcm.16bit.enable=true \
-    audio.offload.pcm.24bit.enable=true
+    persist.audio.fluence.audiorec=true \
+    persist.audio.fluence.voicecall=true \
+    ro.qc.sdk.audio.fluencetype=fluence \
+    use.voice.path.for.pcm.voip=true
 
-# Do not power down SIM card when modem is sent to Low Power Mode.
+# Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.apm_sim_not_pwdn=1
-
-# Ril sends only one RIL_UNSOL_CALL_RING, so set call_ring.multiple to false
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.call_ring.multiple=0
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=LgeLteRIL
-
-# Up to 3 layers can go through overlays
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.hwc.mdpcomp.enable=true
+    bluetooth.chip.vendor=brcm \
+    persist.service.bdroid.a2dp_con=0 \
+    persist.service.bdroid.scms_t=0 \
+    ro.bt.bdaddr_path=/data/misc/bdaddr
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-	camera2.portability.force_api=1
+    camera2.portability.force_api=1
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    rild.libpath=/vendor/lib/libril-qc-qmi-1.so
+# Display
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.hwc.mdpcomp.enable=true \
+    ro.opengles.version=196608 \
+    ro.sf.lcd_density=480
 
+# DRM
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
+# IO Scheduler
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.bt.bdaddr_path=/data/misc/bdaddr
+    sys.io.scheduler=bfq
+
+# Media/offload
+PRODUCT_PROPERTY_OVERRIDES += \
+    audio.offload.buffer.size.kb=32 \
+    audio.offload.gapless.enabled=true \
+    audio.offload.multiple.enabled=false \
+    audio.offload.pcm.16bit.enable=true \
+    audio.offload.pcm.24bit.enable=true \
+    av.offload.enable=true \
+    av.streaming.offload.enable=true \
+    tunnel.audio.encode=true
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=15
+    media.aac_51_output_enabled=true \
+    mm.enable.smoothstreaming=true \
+    mm.enable.qcom_parser=3310129
+
+# Perf
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=/vendor/lib/libqti-perfd-client.so
+
+# Radio
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.custom_ecc=1 \
+    persist.radio.custom_ecc_mcc={234,235,424,426,427,430,431:999},{334:060,066},{422:9999},{730:133} \
+    persist.radio.custom_ecc_mcc_ex={450:111,112,113,119,122,125,127},{724:190},{440,441:110,118,119,112,911} \
+    persist.radio.custom_ecc_voice={515:117},{452:113,114,115} \
+    persist.radio.custom_ecc_hard=911,*911,#911,112,999,000,08,118,120,122,110,119,995,111,113,125,127,133
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    debug.egl.recordable.rgba8888=1
+    persist.radio.apm_sim_not_pwdn=1 \
+    ro.telephony.call_ring.multiple=0
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qualcomm.sensors.qmd=true \
-    ro.qc.sdk.sensors.gestures=true \
-    ro.qualcomm.sensors.pedometer=true \
-    ro.qualcomm.sensors.pam=true \
-    ro.qualcomm.sensors.scrn_ortn=true
+    rild.libpath=/vendor/lib/libril-qc-qmi-1.so \
+    ro.telephony.ril_class=LgeLteRIL
+
+# Sensors
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.qti.sdk.sensors.gestures=true \
+    ro.qti.sensors.amd=true \
+    ro.qti.sensors.game_rv=true \
+    ro.qti.sensors.georv=true \
+    ro.qti.sensors.pam=true \
+    ro.qti.sensors.pedometer=true \
+    ro.qti.sensors.rmd=true \
+    ro.qti.sensors.smd=true \
+    ro.qti.sensors.step_counter=true \
+    ro.qti.sensors.step_detector=true \
+    ro.qti.sensors.tilt_detector=true \
+    ro.qti.sensors.cmc=false \
+    ro.qti.sensors.facing=false \
+    ro.qti.sensors.gtap=false \
+    ro.qti.sensors.tap=false \
+    ro.qti.sensors.tilt=false \
+    ro.qti.sensors.vmd=false \
+    ro.qti.sensors.wu=false
 
 # Sensor debugging
 # Valid settings (and presumably what they mean):
@@ -85,11 +109,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.debug.sensors.hal=e \
     persist.debug.ar.hal=e
 
-# MTP and USB-OTG
+# USB
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp \
     persist.sys.isUsbOtgEnabled=true
 
-# QC vendor extension
+# Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.extension_library=/vendor/lib/libqti-perfd-client.so
+    wifi.interface=wlan0
